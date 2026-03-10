@@ -5,10 +5,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ConcertTicketBooking {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        int intialTickets = sc.nextInt();
-        int totalUsers = sc.nextInt();
+        int intialTickets = 50;
+        int totalUsers = 100;
 
         TicketBooking ticket = new TicketBooking(intialTickets);
 
@@ -31,7 +30,5 @@ public class ConcertTicketBooking {
         System.out.println("Initial Tickets: " + intialTickets);
         System.out.println("Total Tickets Sold: " + ticket.getTotalSoldTickets());
         System.out.println("Remaining Tickets: " + ticket.getAvailableTickets());
-
-
     }
 }
