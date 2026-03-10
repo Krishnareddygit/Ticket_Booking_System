@@ -23,8 +23,18 @@ public class AtomicConcertBooking {
 
         long startTime = System.currentTimeMillis();
 
+//        for (int i = 1; i <= totalUsers; i++) {
+//            executor.submit(new AtomicUserBooking(ticket, "User-" + i));
+//        }
+
         for (int i = 1; i <= totalUsers; i++) {
-            executor.submit(new AtomicUserBooking(ticket, "User-" + i));
+
+            String user = "User-" + i;
+
+            executor.submit(() -> {
+                int reqTickets = ThreadLocalRandom.current().nextInt(1, 4);
+                ticket.bookTickets(user, reqTickets);
+            });
         }
 
         executor.shutdown();
