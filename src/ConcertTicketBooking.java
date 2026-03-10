@@ -1,7 +1,5 @@
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class ConcertTicketBooking {
     public static void main(String[] args) {
@@ -11,7 +9,15 @@ public class ConcertTicketBooking {
 
         TicketBooking ticket = new TicketBooking(intialTickets);
 
-        ExecutorService executor = Executors.newFixedThreadPool(10);
+        ExecutorService executor =
+                new ThreadPoolExecutor(
+                        5,
+                        10,
+                        60,
+                        TimeUnit.SECONDS,
+                        new LinkedBlockingQueue<>(30),
+                        new ThreadPoolExecutor.CallerRunsPolicy()
+                );
 
         long startTime = System.currentTimeMillis();
 
