@@ -10,11 +10,10 @@ public class TicketBooking {
 
     public synchronized void bookTickets(String user, int reqTickets) throws InterruptedException {
 
-        if (reqTickets <= 0) {
+        if (reqTickets <= 0 ||  reqTickets > 3) {
             System.out.println(user + " requested invalid ticket count: " + reqTickets);
             return;
         }
-
 
         while (reqTickets > availableTickets && !isClosed) {
 
