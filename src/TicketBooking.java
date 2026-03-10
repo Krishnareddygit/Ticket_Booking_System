@@ -26,4 +26,11 @@ public class TicketBooking {
         notifyAll();
     }
 
+    public int getAvailableTickets(){
+        return availableTickets;
+    }
+
+    public int getTotalSoldTickets(){
+        return totalSoldTickets;
+    }
 }
