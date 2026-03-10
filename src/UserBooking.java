@@ -12,14 +12,7 @@ public class UserBooking implements Runnable {
 
     @Override
     public void run() {
-
         int reqTickets = random.nextInt(3) + 1;
-
-        try {
-            ticketBooking.bookTickets(userName,reqTickets);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        ticketBooking.bookTickets(userName,reqTickets);
     }
 }

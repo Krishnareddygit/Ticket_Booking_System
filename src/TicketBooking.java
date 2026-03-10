@@ -8,42 +8,32 @@ public class TicketBooking {
         this.availableTickets = availableTickets;
     }
 
-    public synchronized void bookTickets(String user, int reqTickets) throws InterruptedException {
+    public synchronized void bookTickets(String user, int reqTickets) {
 
-        if (reqTickets <= 0 ||  reqTickets > 3) {
+        if (reqTickets <= 0 || reqTickets > 3) {
             System.out.println(user + " requested invalid ticket count: " + reqTickets);
             return;
         }
 
-        while (reqTickets > availableTickets && !isClosed) {
-
-            System.out.println(user + " requested " + reqTickets + " tickets → Waiting (Not enough tickets)");
-
-            try {
-                wait();
-            } catch (Exception e) {
-                Thread.currentThread().interrupt();
-                return;
-            }
+        if (isClosed) {
+            System.out.println(user + " requested " + reqTickets + " tickets → Failed (Sold Out)");
+            return;
         }
 
-        if (isClosed) {
-            System.out.println(user + " requested " + reqTickets + " tickets → Booking closed (Sold out)");
+        if (reqTickets > availableTickets) {
+            System.out.println(user + " requested " + reqTickets + " tickets → Failed (Not enough tickets)");
             return;
         }
 
         availableTickets -= reqTickets;
         totalSoldTickets += reqTickets;
-        System.out.println(user + " requested " + reqTickets + " tickets → Booked → Remaining: " + availableTickets);
+
+        System.out.println(user + " requested " + reqTickets +
+                " tickets → Booked → Remaining: " + availableTickets);
 
         if (availableTickets == 0) {
             isClosed = true;
-            System.out.println("--------------------------------------");
             System.out.println("All tickets sold out → Booking closed");
-            System.out.println("----------------------------------------");
-            notifyAll();
-        }else{
-            notifyAll();
         }
     }
 
