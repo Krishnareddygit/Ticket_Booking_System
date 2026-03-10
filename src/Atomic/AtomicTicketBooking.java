@@ -7,6 +7,7 @@ public class AtomicTicketBooking {
     private final int initialTickets;
     private final AtomicInteger availableTickets;
     private final AtomicInteger totalSoldTickets = new AtomicInteger(0);
+    private final AtomicInteger failedBookings = new AtomicInteger(0);
 
     public AtomicTicketBooking(int initialTickets) {
         this.initialTickets = initialTickets;
@@ -17,6 +18,7 @@ public class AtomicTicketBooking {
 
         if (reqTickets <= 0 || reqTickets > 3) {
             System.out.println(user + " requested invalid ticket count: " + reqTickets);
+            failedBookings.incrementAndGet();
             return;
         }
 
@@ -26,11 +28,13 @@ public class AtomicTicketBooking {
 
             if (currentAvailable == 0) {
                 System.out.println(user + " requested " + reqTickets + " tickets → Failed (Sold Out)");
+                failedBookings.incrementAndGet();
                 return;
             }
 
             if (reqTickets > currentAvailable) {
                 System.out.println(user + " requested " + reqTickets + " tickets → Failed (Not enough tickets)");
+                failedBookings.incrementAndGet();
                 return;
             }
 
@@ -56,5 +60,9 @@ public class AtomicTicketBooking {
 
     public int getTotalSoldTickets() {
         return totalSoldTickets.get();
+    }
+
+    public AtomicInteger getFailedBookings() {
+        return failedBookings;
     }
 }

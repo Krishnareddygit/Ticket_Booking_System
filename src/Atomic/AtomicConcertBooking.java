@@ -53,6 +53,7 @@ public class AtomicConcertBooking {
         System.out.println("Initial Tickets: " + ticket.getInitialTickets());
         System.out.println("Total Tickets Sold: " + ticket.getTotalSoldTickets());
         System.out.println("Remaining Tickets: " + ticket.getAvailableTickets());
+        System.out.println("Failed Bookings:" + ticket.getFailedBookings());
         System.out.println("Execution Time: " + (endTime - startTime) + " ms");
     }
 }
