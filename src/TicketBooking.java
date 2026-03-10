@@ -9,6 +9,13 @@ public class TicketBooking {
     }
 
     public synchronized void bookTickets(String user, int reqTickets) throws InterruptedException {
+
+        if (reqTickets <= 0) {
+            System.out.println(user + " requested invalid ticket count: " + reqTickets);
+            return;
+        }
+
+
         while (reqTickets > availableTickets && !isClosed) {
 
             System.out.println(user + " requested " + reqTickets + " tickets → Waiting (Not enough tickets)");
@@ -35,6 +42,7 @@ public class TicketBooking {
             System.out.println("--------------------------------------");
             System.out.println("All tickets sold out → Booking closed");
             System.out.println("----------------------------------------");
+            notifyAll();
         }else{
             notifyAll();
         }
